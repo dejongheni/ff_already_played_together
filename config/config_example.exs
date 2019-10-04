@@ -12,7 +12,10 @@ config :ff_already_played_together, FfAlreadyPlayedTogetherWeb.Endpoint,
   url: [host: "localhost"],
   secret_key_base: "your_key",
   render_errors: [view: FfAlreadyPlayedTogetherWeb.ErrorView, accepts: ~w(html json)],
-  pubsub: [name: FfAlreadyPlayedTogether.PubSub, adapter: Phoenix.PubSub.PG2]
+  pubsub: [name: FfAlreadyPlayedTogether.PubSub, adapter: Phoenix.PubSub.PG2],
+  live_view: [
+    signing_salt: "mix phx.gen.secret 32"
+  ]
 
 # Configures Elixir's Logger
 config :logger, :console,

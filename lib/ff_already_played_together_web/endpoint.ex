@@ -1,6 +1,8 @@
 defmodule FfAlreadyPlayedTogetherWeb.Endpoint do
   use Phoenix.Endpoint, otp_app: :ff_already_played_together
 
+  socket "/live", Phoenix.LiveView.Socket
+
   socket "/socket", FfAlreadyPlayedTogetherWeb.UserSocket,
     websocket: true,
     longpoll: false

@@ -40,7 +40,8 @@ defmodule FfAlreadyPlayedTogether.MixProject do
       {:jason, "~> 1.0"},
       {:plug_cowboy, "~> 2.0"},
       {:fflogs_wrapper, git: "https://github.com/dejongheni/fflogs_wrapper.git"},
-      {:memoize, "~> 1.2"}
+      {:memoize, "~> 1.2"},
+      {:phoenix_live_view, "~> 0.3.0"}
     ]
   end
 end
