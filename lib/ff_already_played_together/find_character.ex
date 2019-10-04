@@ -3,10 +3,10 @@ defmodule FfAlreadyPlayedTogether.FindCharacter do
   use Memoize
 
 
-  defmemo get_character_reports_id_and_fights(name, server, region), expires_in: 12 * 60 * 60 * 1000  do
+  defmemo get_character_reports_id_and_fights(name, server, region, params), expires_in: 12 * 60 * 60 * 1000  do
     name = String.replace(name, " ", "%20")
 
-    get_character_parses(name, server, region)
+    get_character_parses(name, server, region, params)
     |> Enum.map(fn report -> %{"reportID" => report["reportID"], "fightID" => report["fightID"]} end)
   end
 

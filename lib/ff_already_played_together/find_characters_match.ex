@@ -2,9 +2,9 @@ defmodule FfAlreadyPlayedTogether.FindCharactersMatch do
   import FfAlreadyPlayedTogether.FindCharacter
   use Memoize
 
-  def get_parses_in_common(name1, server1, region1, name2, server2, region2) do
-    player1 = get_character_reports_id_and_fights(name1, server1, region1)
-    player2 = get_character_reports_id_and_fights(name2, server2, region2)
+  def get_parses_in_common(name1, server1, region1, name2, server2, region2, params \\ %{}) do
+    player1 = get_character_reports_id_and_fights(name1, server1, region1, params)
+    player2 = get_character_reports_id_and_fights(name2, server2, region2, params)
     not_in_common = player1 -- player2
     player1 -- not_in_common
   end
@@ -15,8 +15,8 @@ defmodule FfAlreadyPlayedTogether.FindCharactersMatch do
     end)
   end
 
-  def get_parses(name1, server1, region1, name2, server2, region2) do
-    get_parses_in_common(name1, server1, region1, name2, server2, region2)
+  def get_parses(name1, server1, region1, name2, server2, region2, params \\ %{}) do
+    get_parses_in_common(name1, server1, region1, name2, server2, region2, params)
     |> parses_into_links
   end
 end
