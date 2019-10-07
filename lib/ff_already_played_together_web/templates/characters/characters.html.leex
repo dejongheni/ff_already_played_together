@@ -1,0 +1,20 @@
+<form phx-submit="search">
+  <input type="text" name="player1" value="<%= @player1 %>" list="matches" placeholder="Enter the player to search"/>
+  <select name="select-server-player1">
+    <%= for {server, region} <- @servers_list do %>
+    <option value="<%= server %>-<%= region %>"><%= server %></option>
+    <% end %>
+  </select>
+  <input type="text" name="player2" value="<%= @player2 %>" list="matches" placeholder="Enter the other player to search"/>
+  <select name="select-server-player2">
+    <%= for {server, region} <- @servers_list do %>
+    <option value="<%= server %>-<%= region %>"><%= server %></option>
+    <% end %>
+  </select>
+  <button type="submit" phx-submit="search">Search</button>
+  <ul>
+  <%= for parse <- @result do %>
+   <li><a href="<%= parse %>"><%= parse %></a></li>
+  <% end %>
+  </ul>
+</form>
