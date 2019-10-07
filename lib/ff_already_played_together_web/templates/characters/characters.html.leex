@@ -13,8 +13,13 @@
   </select>
   <button type="submit" phx-submit="search">Search</button>
   <ul>
-  <%= for parse <- @result do %>
-   <li><a href="<%= parse %>"><%= parse %></a></li>
-  <% end %>
+  <%= case @result do %>
+    <%= {:ok, parses} -> %>
+      <%= for parse <- parses do %>
+      <li><a href="<%= parse %>"><%= parse %></a></li>
+      <% end %>
+    <%= {:error, [error]} -> %>
+      <p class="error"><%= error %></p>
+    <% end %>
   </ul>
 </form>
