@@ -16,7 +16,7 @@
   <%= case @result do %>
     <%= {:ok, parses} -> %>
       <%= for parse <- parses do %>
-      <li><a href="<%= parse %>"><%= parse %></a></li>
+      <li><a href="<%= parse %>" target="_blank"><%= parse %></a></li>
       <% end %>
     <%= {:error, [error]} -> %>
       <p class="error"><%= error %></p>

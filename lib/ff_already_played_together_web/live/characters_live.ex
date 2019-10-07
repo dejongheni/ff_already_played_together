@@ -12,9 +12,13 @@ defmodule FfAlreadyPlayedTogetherWeb.CharactersLive do
   end
 
   def handle_event("search", %{"player1" => player1, "player2" => player2, "select-server-player1" => player1_server, "select-server-player2" => player2_server}, socket) do
-    [player1_server, player1_region] = String.split(player1_server, "-")
-    [player2_server, player2_region] = String.split(player2_server, "-")
-    result = FindCharactersMatch.get_parses(player1, player1_server, player1_region, player2, player2_server, player2_region) |> IO.inspect
-    {:noreply, assign(socket, player1: player1, player2: player2, result: result)}
+    if player1 == "" or player2 == "" do
+      {:noreply, assign(socket, player1: player1, player2: player2, result: {:error, ["Please input a character name"]})}
+    else
+      [player1_server, player1_region] = String.split(player1_server, "-")
+      [player2_server, player2_region] = String.split(player2_server, "-")
+      result = FindCharactersMatch.get_parses(player1, player1_server, player1_region, player2, player2_server, player2_region)
+      {:noreply, assign(socket, player1: player1, player2: player2, result: result)}
+    end
   end
 end
