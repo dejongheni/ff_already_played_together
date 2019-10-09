@@ -15,16 +15,13 @@ defmodule FfAlreadyPlayedTogether.FindCharacter do
     end
   end
 
-  defmemo get_zones_list(), expires_in: 24 * 60 * 60 * 1000  do
+  defmemo get_zones(), expires_in: 24 * 60 * 60 * 1000  do
     FflogsWrapper.Zones.get_zones
-    |> Enum.map(fn zone -> %{"id" => zone["id"], "partitions" => count_partitions(zone["partitions"])} end)
-  end
-
-  defp count_partitions(nil) do
-    0
-  end
-
-  defp count_partitions(partitions) do
-    Enum.count(partitions)
+    |> Enum.map(fn zone ->
+      %{"id" => zone["id"],
+        "name" => zone["name"],
+        "partitions" => if Map.has_key?(zone, "partitions") do Enum.uniq_by(zone["partitions"], fn partition -> partition["name"] end) else %{} end
+       }
+      end)
   end
 end

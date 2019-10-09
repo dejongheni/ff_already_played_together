@@ -104,4 +104,5 @@ config :ff_already_played_together,
     {"Zalera", "NA"},
     {"Zeromus", "JP"},
     {"Zodiark", "EU"}
-  ]
+  ],
+  default_tier_id: 29

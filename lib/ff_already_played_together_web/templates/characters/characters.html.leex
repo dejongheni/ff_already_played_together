@@ -1,25 +1,52 @@
+<script>
+blurMethod = function getBlur() {      
+  document.getElementById("select-zone").blur();
+}
+</script>
 <form phx-submit="search">
-  <input type="text" name="player1" value="<%= @player1 %>" list="matches" placeholder="Enter the player to search"/>
+  <input type="text" name="player1" value="<%= @player1 %>" placeholder="Enter the player to search"/>
   <select name="select-server-player1">
     <%= for {server, region} <- @servers_list do %>
     <option value="<%= server %>-<%= region %>"><%= server %></option>
     <% end %>
   </select>
-  <input type="text" name="player2" value="<%= @player2 %>" list="matches" placeholder="Enter the other player to search"/>
+  <input type="text" name="player2" value="<%= @player2 %>" placeholder="Enter the other player to search"/>
   <select name="select-server-player2">
     <%= for {server, region} <- @servers_list do %>
     <option value="<%= server %>-<%= region %>"><%= server %></option>
     <% end %>
   </select>
+  <select phx-blur="select_zone" name="selected" id="select-zone" onchange="blurMethod()">
+    <%= for zone <- @zones  do %>
+      <%= if zone["id"] == @selected do %>
+        <option value="<%= zone["id"] %>" selected="selected"><%= zone["name"] %></option>
+      <% else %>
+        <option value="<%= zone["id"] %>"><%= zone["name"] %></option>
+      <% end %>
+    <% end %>
+  </select>
+  <select name="partition_selected">
+    <%= for zone <- @zones  do %>
+      <%= for {partition, index} <- Enum.with_index(zone["partitions"]) do %>
+        <%= if zone["id"] == @selected do %>
+          <%= if Map.has_key?(partition, "default") do %>
+            <option value="<%= index + 1 %>" selected="selected"><%= partition["name"] %></option>
+          <% else %>
+            <option value="<%= index + 1 %>"><%= partition["name"] %></option>
+          <% end %>
+        <% end %>
+      <% end %>
+    <% end %>
+  </select>
   <button type="submit" phx-submit="search">Search</button>
   <ul>
   <%= case @result do %>
-    <%= {:ok, parses} -> %>
+    <% {:ok, parses} -> %>
       <%= for parse <- parses do %>
       <li><a href="<%= parse %>" target="_blank"><%= parse %></a></li>
       <% end %>
-    <%= {:error, [error]} -> %>
+    <% {:error, [error]} -> %>
       <p class="error"><%= error %></p>
-    <% end %>
+  <% end %>
   </ul>
 </form>
